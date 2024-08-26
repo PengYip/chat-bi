@@ -2,13 +2,11 @@ from langchain_core.pydantic_v1 import BaseModel, Field, validator
 from enum import Enum, auto
 from typing import List, Dict, Any, Union
 
-
 class PerformanceIndicator(Enum):
-    SALES = auto()  # 销售额
-    PROCUREMENT = auto()  # 采购额
-    GROSS_PROFIT = auto()  # 毛利润
-    GROSS_MARGIN_RATE = auto()  # 毛利率
-
+    SALES = 'SALES'
+    PROCUREMENT = 'PROCUREMENT'
+    GROSS_PROFIT = 'GROSS_PROFIT'
+    GROSS_MARGIN_RATE = 'GROSS_MARGIN_RATE'
 
 class PerformanceQuerySchema(BaseModel):
     """业绩相关查询结构化参数"""
@@ -19,7 +17,7 @@ class PerformanceQuerySchema(BaseModel):
     )
     aggregation: str = Field(
         default=None,
-        description="聚合粒度,可选值: MONTH, QUARTER, YEAR",
+        description="聚合粒度,可选值: MONTH, YEAR",
     )
     start_time: str = Field(
         default=None,
@@ -56,8 +54,8 @@ class PerformanceQuerySchema(BaseModel):
 
     @validator("aggregation")
     def validate_aggregation(cls, v):
-        if v not in ["MONTH", "QUARTER", "YEAR"]:
-            raise ValueError(f"aggregation must be one of MONTH, QUARTER, YEAR")
+        if v not in ["MONTH", "YEAR"]:
+            raise ValueError(f"aggregation must be one of MONTH,YEAR")
         return v
 
     @validator("start_time")
