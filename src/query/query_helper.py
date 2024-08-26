@@ -41,6 +41,12 @@ class SalesQueryHelper:
             return grouped_df
         if params.operator == '>':
             result_df = grouped_df[grouped_df[params.indicator] > float(params.value)]
+        elif params.operator == '<':
+            result_df = grouped_df[grouped_df[params.indicator] < float(params.value)]
+        elif params.operator == '>=':
+            result_df = grouped_df[grouped_df[params.indicator] >= float(params.value)]
+        elif params.operator == '<=':
+            result_df = grouped_df[grouped_df[params.indicator] <= float(params.value)]
         else:
             raise ValueError("Unsupported operator")
 

@@ -28,11 +28,11 @@ class PerformanceQuerySchema(BaseModel):
         description="结束时间,格式: yyyy-mm-dd",
     )
     scope: str = Field(
-        default="COMPANY",
+        default="GROUP",
         description="查询范围,可选值: COMPANY,GROUP",
     )
     sort_type: str = Field(
-        default=None,
+        default="DESC",
         description="排序类型,可选值: ASC, DESC，明确要求按最高值还是最低值排序时才取值，否则默认为None",
     )
     operator: str = Field(
@@ -43,7 +43,7 @@ class PerformanceQuerySchema(BaseModel):
         description="过滤条件的值,当operator为IN或NOT IN时,多个值用逗号分隔",
     )
     company_name: str = Field(
-        default=None, description="公司名称,当scope为COMPANY时,company_name必填"
+        default=None, description="公司名称,当scope为COMPANY时,company_name必填,当scope为GROUP时,company_name可选"
     )
 
     @validator("indicator")
@@ -86,19 +86,19 @@ class PerformanceQuerySchema(BaseModel):
 
     @validator("operator")
     def validate_operator(cls, v):
-        if v not in ["<", ">", "=", ">=", "<=", "!=", "IN", "NOT IN"]:
-            raise ValueError(
-                f"operator must be one of '<', '>', '=', '>=', '<=', '!=', 'IN', 'NOT IN'"
-            )
+        if v not in ["<", ">", "=", ">=", "<=", "!=", "IN", "NOT IN",None]:
+            # raise ValueError(
+            print(f"operator must be one of '<', '>', '=', '>=', '<=', '!=', 'IN', 'NOT IN',or None,but got {v}")
+            # )
         return v
 
-    @validator("value")
-    def validate_value(cls, v, values):
-        if values.get("operator") in ["IN", "NOT IN"]:
-            if not v:
-                raise ValueError("value must be provided when operator is IN or NOT IN")
-            if "," not in v:
-                raise ValueError(
-                    "value must be separated by comma when operator is IN or NOT IN"
-                )
-        return v
+    # @validator("value")
+    # def validate_value(cls, v, values):
+    #     if values.get("operator") in ["IN", "NOT IN"]:
+    #         if not v:
+    #             raise ValueError("value must be provided when operator is IN or NOT IN")
+    #         if "," not in v:
+    #             raise ValueError(
+    #                 "value must be separated by comma when operator is IN or NOT IN"
+    #             )
+    #     return v

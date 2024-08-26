@@ -20,6 +20,10 @@ EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
         MessagesPlaceholder("examples"),  # <-- EXAMPLES!
         # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         MessagesPlaceholder("company_name_example"),
+        (
+            "human",
+            "scope默认取GROUP,如果能够从用户身份或查询请求中直接获取对应的具体公司名称,在company_name确定的情况下scope才可以为COMPANY",
+        ),
         ("human", "{text}"),
     ]
 )
