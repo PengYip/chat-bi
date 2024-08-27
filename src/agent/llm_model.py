@@ -23,6 +23,14 @@ MODEL_NAME = os.getenv("DEEPSEEK_MODEL")
 QuerySchemaType = TypeVar("QuerySchemaType", bound=PerformanceQuerySchema)
 
 
+class DeepSeekChatLLM:
+    def __init__(self) -> None:
+        self.llm = ChatOpenAI(
+            api_key=DEEPSEEK_API, base_url=BASE_URL, model=MODEL_NAME, temperature=0.1
+        )
+        self.date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+
 # 定义 Runnable 类
 class ExtractorRunnable:
     def __init__(self):
@@ -44,3 +52,14 @@ class ExtractorRunnable:
         else:
             raise Exception("input_data must be InputData or dict")
         return runnable_with_examples.invoke(input_data_dict)
+
+
+class TaggingRunnable:
+    def __init__(self):
+        self.llm = ChatOpenAI(
+            api_key=DEEPSEEK_API, base_url=BASE_URL, model=MODEL_NAME, temperature=0.1
+        )
+
+    def invoke(self, text):
+        runnable = TAGGING_PROMPT | self.llm | tagging_output_parser
+        return runnable.invoke(text)

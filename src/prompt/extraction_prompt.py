@@ -53,6 +53,26 @@ COMPANY_NAME_EXAMPLES = [
     )
 ]
 
+COMPANY_NAME_LIST = [
+    "北国贸能源化工有限公司",
+    "湖北国贸金属矿产有限公司",
+    "湖北国贸汽车有限公司",
+    "湖北国际贸易集团有限公司",
+    "湖北国贸农产品有限公司",
+    "武汉鼎联丰国际贸易有限公司",
+    "湖北国贸农产品有限公司武汉分公司",
+    "湖北南方大集实业有限公司",
+    "湖北南方大集实业有限公司东西湖分公司",
+    "湖北南方大集实业有限公司慈惠分公司",
+    "湖北南方大集实业有限公司江汉分公司",
+    "湖北南方大集实业有限公司能源分公司",
+    "湖北南方工贸有限公司",
+    "湖北南方集团有限公司",
+    "湖北国贸供应链管理有限公司",
+    "湖北华中能源发展有限公司",
+    "湖北国贸汽车有限公司红安分公司",
+]
+
 performance_putput_examples = [
     (
         "去年集团利润率为负的公司,当前日期是2024-08-25，查询用户为集团用户",
@@ -83,6 +103,7 @@ performance_putput_examples = [
     ),
 ]
 
+
 class Example(TypedDict):
     """A representation of an example consisting of text input and expected tool calls.
 
@@ -91,6 +112,8 @@ class Example(TypedDict):
 
     input: str  # This is the example text
     tool_calls: List[BaseModel]  # Instances of pydantic model that should be extracted
+
+
 def tool_example_to_messages(example: Example) -> List[BaseMessage]:
     """Convert an example into a list of messages that can be fed into an LLM.
 
@@ -127,6 +150,8 @@ def tool_example_to_messages(example: Example) -> List[BaseMessage]:
     for output, tool_call in zip(tool_outputs, tool_calls):
         messages.append(ToolMessage(content=output, tool_call_id=tool_call["id"]))
     return messages
+
+
 def get_performance_output_examples(examples):
     example_message = []
     for text, tool_call in examples:
@@ -135,4 +160,7 @@ def get_performance_output_examples(examples):
         )
     return example_message
 
-PERFORMANCE_OUTPUT_EXAMPLES_MESSAGES = get_performance_output_examples(performance_putput_examples)
+
+PERFORMANCE_OUTPUT_EXAMPLES_MESSAGES = get_performance_output_examples(
+    performance_putput_examples
+)

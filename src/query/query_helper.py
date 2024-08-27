@@ -23,7 +23,8 @@ class SalesQueryHelper:
 
         # Extract year or month from date
         if params.aggregation == "YEAR":
-            filtered_df["year"] = filtered_df["date"].dt.year
+            # filtered_df["year"] = filtered_df["date"].dt.year
+            filtered_df = filtered_df.assign(year=filtered_df["date"].dt.year)
             group_by_columns = ["company_name", "year"]
         elif params.aggregation == "MONTH":
             filtered_df["month"] = filtered_df["date"].dt.to_period("M")

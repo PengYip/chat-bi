@@ -1,3 +1,3 @@
-from .llm_model import ExtractorRunnable
+from .llm_model import ExtractorRunnable,DeepSeekChatLLM
 
-__all__ = ["ExtractorRunnable"]
+__all__ = ["ExtractorRunnable","DeepSeekChatLLM"]

@@ -1,5 +1,5 @@
 from langchain_core.pydantic_v1 import BaseModel, Field, validator
-from enum import Enum, auto
+from enum import Enum
 from typing import List, Dict, Any, Union
 
 class PerformanceIndicator(Enum):
@@ -48,8 +48,8 @@ class PerformanceQuerySchema(BaseModel):
 
     @validator("indicator")
     def validate_indicator(cls, v):
-        if v not in [i.name for i in PerformanceIndicator]:
-            raise ValueError(f"indicator must be one of {PerformanceIndicator}")
+        if v not in ["SALES", "PROCUREMENT","GROSS_PROFIT","GROSS_MARGIN_RATE"]:
+            raise ValueError(f"indicator must be one of SALES, PROCUREMENT,GROSS_PROFIT,GROSS_MARGIN_RATE")
         return v
 
     @validator("aggregation")
