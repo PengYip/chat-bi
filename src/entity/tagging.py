@@ -1,5 +1,9 @@
 from langchain_core.pydantic_v1 import BaseModel, Field, validator
 from enum import Enum
+from langchain_core.pydantic_v1 import BaseModel, Field
+
+
+
 
 
 class DomainClassification(BaseModel):
@@ -10,7 +14,7 @@ class DomainClassification(BaseModel):
         业绩:公司的销售额,采购额,毛利润,毛利率.
         库存:仓库中各种货物的库存重量,暂估库存货值,仓库的月度吞吐量,年度吞吐量.
         代采:客户的存货金额余额.
-        回款:公司收到客户的回款金额的信息.
+        回款:公司收到客户的回款金额的台帐.
         合同:关注合同执行状态.
         应收:客户的应收金额,
         帐龄:关注每笔结算流程帐龄的时间长度.
