@@ -143,8 +143,36 @@ inventory_output_examples = [
     (
         "仓库预付货款,现在日期是2024-08-28,用户角色分组是公司用户，用户所属公司是湖北国贸能源化工有限公司",
         InventoryQuerySchema(
-            indicator="GROSS_MARGIN_RATE",
+            indicator="预付货款",
+            scope="COMPANY",
+            sort_type="DESC",
+            company_name="湖北国贸能源化工有限公司",
+            industry_type="煤炭",
+        ),
+    ),
+    (
+        "存货金额余额大于1000万的仓库,现在日期是2024-08-28,用户角色分组是公司用户，用户所属公司是湖北国贸金属矿产有限公司",
+        InventoryQuerySchema(
+            indicator="存货金额余额",
+            scope="COMPANY",
+            sort_type="DESC",
+            operator=">",
+            value="10000000",
+            company_name="湖北国贸金属矿产有限公司",
+            industry_type="钢材",
+        ),
+    ),
+    (
+        "2023年仓库的吞吐量,现在日期是2024-08-28,用户角色分组是公司用户，用户所属公司是湖北国贸金属矿产有限公司",
+        InventoryQuerySchema(
+            indicator="月吞吐量",
             aggregation="YEAR",
+            start_time="2023-01-01",
+            end_time="2023-12-31",
+            scope="COMPANY",
+            sort_type="DESC",
+            company_name="湖北国贸金属矿产有限公司",
+            industry_type="钢材",
         ),
     ),
 ]
@@ -209,4 +237,8 @@ def get_performance_output_examples(examples):
 
 PERFORMANCE_OUTPUT_EXAMPLES_MESSAGES = get_performance_output_examples(
     performance_output_examples
+)
+
+INVENTORY_OUTPUT_EXAMPLE_MESSAGES = get_performance_output_examples(
+    inventory_output_examples
 )
