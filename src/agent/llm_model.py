@@ -37,9 +37,23 @@ class DeepSeekChatLLM:
 
 # 定义 Runnable 类
 class ExtractorRunnable:
-    '''
+    """
     根据定义的schema参数构造参数提取器,输入文本得到结构化的参数
-    '''
+    Example:
+    >>> extractor = ExtractorRunnable(PerformanceQuerySchema)
+    extractor.invoke(
+            {
+                "text": 用户输入,
+                "date": 日期:yyyy-mm-dd,
+                "user_role": "集团用户" or "公司用户",
+                "examples": PERFORMANCE_OUTPUT_EXAMPLES_MESSAGES,以Messages类封装的例子
+                "company_name_example": COMPANY_NAME_EXAMPLES,可用的公司名称
+            }
+    )
+
+
+    """
+
     def __init__(self, schema: Type[QuerySchemaType]):
         self.schema = schema
         self.llm = ChatOpenAI(
@@ -51,7 +65,8 @@ class ExtractorRunnable:
         )
         self.date = datetime.datetime.now().strftime("%Y-%m-%d")
 
-    def invoke(self, input_data: InputData)->Type[QuerySchemaType]:
+    def invoke(self, input_data: InputData) -> Type[QuerySchemaType]:
+        """ """
         runnable_with_examples = EXTRACTION_PROMPT | self.llm
         if isinstance(input_data, InputData):
             input_data_dict = input_data.model_dump()
@@ -68,7 +83,7 @@ class ClassificationRunnable:
             api_key=DEEPSEEK_API, base_url=BASE_URL, model=MODEL_NAME, temperature=0.1
         ).with_structured_output(schema=schema)
 
-    def invoke(self, text)->Type[ClassificationSchemaType]:
+    def invoke(self, text) -> Type[ClassificationSchemaType]:
         runnable = CLASSIFICATION_PROMPT | self.llm
 
         return runnable.invoke(text)

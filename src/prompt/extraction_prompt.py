@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from entity.extraction import PerformanceQuerySchema
+from entity.extraction import PerformanceQuerySchema, InventoryQuerySchema
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -47,11 +47,13 @@ EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
     ]
 )
 
+
 COMPANY_NAME_EXAMPLES = [
     HumanMessage(
-        "company name examples:湖北国贸能源化工有限公司,湖北国贸金属矿产有限公司,湖北国贸汽车有限公司,湖北国际贸易集团有限公司,湖北国贸农产品有限公司,武汉鼎联丰国际贸易有限公司,湖北国贸农产品有限公司武汉分公司,湖北南方大集实业有限公司,湖北南方大集实业有限公司东西湖分公司,湖北南方大集实业有限公司慈惠分公司,湖北南方大集实业有限公司江汉分公司,湖北南方大集实业有限公司能源分公司,湖北南方工贸有限公司,湖北南方集团有限公司,湖北国贸供应链管理有限公司,湖北华中能源发展有限公司,湖北国贸汽车有限公司红安分公司,company_name如果要取值，提取后的名称必须从例子里选择，如果没有相符的公司名则返回company_name='company_name_not_found'"
+        "company_name_examples:湖北国贸能源化工有限公司,湖北国贸金属矿产有限公司,湖北国贸汽车有限公司,湖北国际贸易集团有限公司,湖北国贸农产品有限公司,武汉鼎联丰国际贸易有限公司,湖北国贸农产品有限公司武汉分公司,湖北南方大集实业有限公司,湖北南方大集实业有限公司东西湖分公司,湖北南方大集实业有限公司慈惠分公司,湖北南方大集实业有限公司江汉分公司,湖北南方大集实业有限公司能源分公司,湖北南方工贸有限公司,湖北南方集团有限公司,湖北国贸供应链管理有限公司,湖北华中能源发展有限公司,湖北国贸汽车有限公司红安分公司,company_name如果要取值，提取后的名称必须从例子里选择，如果没有相符的公司名则返回company_name='company_name_not_found'"
     )
 ]
+
 
 COMPANY_NAME_LIST = [
     "北国贸能源化工有限公司",
@@ -73,7 +75,32 @@ COMPANY_NAME_LIST = [
     "湖北国贸汽车有限公司红安分公司",
 ]
 
-performance_putput_examples = [
+# 钢铁仓库名称
+STEEL_INVENTORY_NAME_LIST = [
+    "山西宏达钢铁有限公司厂库",
+    "山西华鑫源钢铁集团有限公司厂库",
+    "安阳市新普钢铁有限公司厂库",
+    "安钢集团信阳钢铁有限责任公司厂库",
+    "四川德润钢铁集团航达钢铁有限责任公司厂库",
+    "山西晋南钢铁集团有限公司厂库",
+    "山西新泰钢铁有限公司厂库",
+    "云南曲靖呈钢钢铁(集团)有限公司厂库",
+    "六安钢铁控股集团有限公司仓库",
+    "山西建龙实业有限公司厂库",
+    "中拓物流(武汉建投汉阳库)",
+]
+
+# 煤炭仓库名称
+COAL_INVENTORY_NAME_LIST = [
+    "杨桥畔华茂二号库",
+    "靖江盈利港",
+    "京唐港",
+    "直发港",
+    "太仓港",
+]
+
+
+performance_output_examples = [
     (
         "去年集团利润率为负的公司,当前日期是2024-08-25，查询用户为集团用户",
         PerformanceQuerySchema(
@@ -99,6 +126,25 @@ performance_putput_examples = [
             operator=">",
             value="10000000",
             company_name="国贸能化",
+        ),
+    ),
+]
+
+inventory_output_examples = [
+    (
+        "煤炭仓库的库存重量是多少,现在日期是2024-08-28,用户角色分组是集团用户",
+        InventoryQuerySchema(
+            indicator="库存重量",
+            scope="GROUP",
+            sort_type="DESC",
+            industry_type="煤炭",
+        ),
+    ),
+    (
+        "仓库预付货款,现在日期是2024-08-28,用户角色分组是公司用户，用户所属公司是湖北国贸能源化工有限公司",
+        InventoryQuerySchema(
+            indicator="GROSS_MARGIN_RATE",
+            aggregation="YEAR",
         ),
     ),
 ]
@@ -162,5 +208,5 @@ def get_performance_output_examples(examples):
 
 
 PERFORMANCE_OUTPUT_EXAMPLES_MESSAGES = get_performance_output_examples(
-    performance_putput_examples
+    performance_output_examples
 )
