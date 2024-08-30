@@ -19,6 +19,15 @@ class SalesBarChart:
             self.create_chart()
         self.fig.show()
 
+class SalesBarChartForCompany:
+    def __init__(self, df: DataFrame):
+        self.df = df
+        self.fig = None
+
+    def plot(self):
+        self.fig = px.bar(
+            self.df, x="month", y="SALES", color="company_name", text="SALES"
+        )
 
 class SalesBarChartForGroup:
     def __init__(self, df: DataFrame):

@@ -122,15 +122,15 @@ class InventoryQuerySchema(BaseModel):
     )
     aggregation: str = Field(
         default=None,
-        description="聚合粒度,可选值: MONTH, YEAR.只有当indicator为月吞吐量时才有这个参数",
+        description="聚合粒度,可选值: MONTH, YEAR.只有当indicator为月度吞吐量时才有这个参数",
     )
     start_time: str = Field(
         default=None,
-        description="开始时间,格式: yyyy-mm-dd,只有当indicator为月吞吐量时才根据时间范围查询",
+        description="开始时间,格式: yyyy-mm-dd,只有当indicator为月度吞吐量时才根据时间范围查询",
     )
     end_time: str = Field(
         default=None,
-        description="结束时间,格式: yyyy-mm-dd,只有当indicator为月吞吐量时才根据时间范围查询",
+        description="结束时间,格式: yyyy-mm-dd,只有当indicator为月度吞吐量时才根据时间范围查询",
     )
     scope: str = Field(
         default="GROUP",

@@ -35,10 +35,8 @@ EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
             "If you do not know the value of an attribute asked "
             "to extract, return null for the attribute's value.",
         ),
-        # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        MessagesPlaceholder("examples"),  # <-- EXAMPLES!
-        # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         MessagesPlaceholder("company_name_example"),
+        MessagesPlaceholder("examples"),  # <-- EXAMPLES!
         (
             "human",
             "scope默认取GROUP,如果能够从用户身份或查询请求中直接获取对应的具体公司名称,在company_name确定的情况下scope才可以为COMPANY",
@@ -50,7 +48,7 @@ EXTRACTION_PROMPT = ChatPromptTemplate.from_messages(
 
 COMPANY_NAME_EXAMPLES = [
     HumanMessage(
-        "company_name_examples:湖北国贸能源化工有限公司,湖北国贸金属矿产有限公司,湖北国贸汽车有限公司,湖北国际贸易集团有限公司,湖北国贸农产品有限公司,武汉鼎联丰国际贸易有限公司,湖北国贸农产品有限公司武汉分公司,湖北南方大集实业有限公司,湖北南方大集实业有限公司东西湖分公司,湖北南方大集实业有限公司慈惠分公司,湖北南方大集实业有限公司江汉分公司,湖北南方大集实业有限公司能源分公司,湖北南方工贸有限公司,湖北南方集团有限公司,湖北国贸供应链管理有限公司,湖北华中能源发展有限公司,湖北国贸汽车有限公司红安分公司,company_name如果要取值，提取后的名称必须从例子里选择，如果没有相符的公司名则返回company_name='company_name_not_found'"
+        "公司名称:[湖北国贸能源化工有限公司,湖北国贸金属矿产有限公司,湖北国贸汽车有限公司,湖北国际贸易集团有限公司,湖北国贸农产品有限公司,武汉鼎联丰国际贸易有限公司,湖北国贸农产品有限公司武汉分公司,湖北南方大集实业有限公司,湖北南方大集实业有限公司东西湖分公司,湖北南方大集实业有限公司慈惠分公司,湖北南方大集实业有限公司江汉分公司,湖北南方大集实业有限公司能源分公司,湖北南方工贸有限公司,湖北南方集团有限公司,湖北国贸供应链管理有限公司,湖北华中能源发展有限公司,湖北国贸汽车有限公司红安分公司],company_name如果要取值，提取后的名称必须从例子里选择，可以模糊匹配到最接近的公司，如果没有完全相符的公司名则返回company_name='company_name_not_found',不返回列表中不存在的公司名称"
     )
 ]
 
@@ -125,7 +123,7 @@ performance_output_examples = [
             sort_type="DESC",
             operator=">",
             value="10000000",
-            company_name="国贸能化",
+            company_name="湖北国贸能源化工有限公司",
         ),
     ),
 ]
