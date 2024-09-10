@@ -25,6 +25,8 @@ class SalesBarChartForCompany:
         self.fig = None
 
     def plot(self):
+        if "month" in self.df.columns:
+            self.df["month"] = self.df["month"].astype(str)
         self.fig = px.bar(
             self.df, x="month", y="SALES", color="company_name", text="SALES"
         )
